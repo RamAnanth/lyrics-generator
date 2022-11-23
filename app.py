@@ -11,8 +11,8 @@ def generate(co, prompt):
     response = co.generate(  
     model='xlarge',  
     prompt = prompt,  
-    max_tokens=300,  
-    temperature=0.95,  
+    max_tokens=100,  
+    temperature=0.98,  
     stop_sequences=["--"])
 
     gens = response.generations
@@ -61,9 +61,7 @@ with st.form("form"):
 if submitted:
     with st.spinner("Writing something awesome ... Please wait a few seconds ... "):
         co = cohere.Client(api_key=CO_API_KEY)
-        additional_prompt = f"""  
-            Genre:{genre_options}
-            Lyrics:"""
+        additional_prompt = f"""Genre:{genre_options}\nLyrics:"""
         prompt = initial_prompt + additional_prompt
         gens = generate(co, prompt)
         lyrics = gens[0].text
