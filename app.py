@@ -59,12 +59,11 @@ with st.form("form"):
     submitted = st.form_submit_button(label="Generate Lyrics!")
 
 if submitted:
-    with st.spinner("Cooking up something delicious ... please wait a few seconds ... "):
+    with st.spinner("Writing something awesome ... Please wait a few seconds ... "):
         co = cohere.Client(api_key=CO_API_KEY)
         additional_prompt = f"""  
             Genre:{genre_options}
-            Lyrics:
-            """
+            Lyrics:"""
         prompt = initial_prompt + additional_prompt
         gens = generate(co, prompt)
         lyrics = gens[0].text
