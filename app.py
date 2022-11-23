@@ -60,7 +60,7 @@ with st.form("form"):
 
 if submitted:
     with st.spinner("Cooking up something delicious ... please wait a few seconds ... "):
-        co = cohere.Client(api_key='CO_API_KEY')
+        co = cohere.Client(api_key=CO_API_KEY)
         additional_prompt = f"""  
             Genre:{genre_options}
             Lyrics:
