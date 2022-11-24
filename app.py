@@ -78,7 +78,7 @@ if submitted:
             prompt = initial_prompt + additional_prompt
             gens = generate(co, prompt)
         else:
-            prompt = f"Give the lyrics for a song."
+            prompt = f"Generate the lyrics for a song given the genre."
             prompt += f" Make sure the genre is {genre_options}."
             gens = command(co, prompt)
         lyrics = gens[0].text
