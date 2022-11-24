@@ -65,6 +65,6 @@ if submitted:
         prompt = initial_prompt + additional_prompt
         gens = generate(co, prompt)
         lyrics = gens[0].text
-        st.markdown(f"## Lyrics for a song with genre {genre_options}##")
+        st.markdown(f"## Lyrics for a song with genre {genre_options}")
         st.write(lyrics)
 
