@@ -18,6 +18,16 @@ def generate(co, prompt):
     gens = response.generations
     return gens
 
+def command(co, prompt, model='command-xlarge-20221108', *args, **kwargs):
+    gens = co.generate(
+    prompt, 
+    model=model, 
+    max_tokens=100, 
+    return_likelihoods='GENERATION', 
+    temperature=0.98
+    *args, **kwargs)
+    return sorted(gens, key=lambda g: -g.likelihood)    
+
 initial_prompt = f"""  
 This program generates lyrics for a song given the genre.
 
@@ -52,6 +62,8 @@ st.set_page_config(layout="centered", page_icon="🎵", page_title="Lyrics Gener
 
 st.header("Lyrics Generation")
 
+model_type = "command"
+
 with st.form("form"):
     genre_options = st.selectbox(
     'What genre would you like?',
@@ -62,9 +74,14 @@ if submitted:
     with st.spinner("Writing something awesome ... Please wait a few seconds ... "):
         co = cohere.Client(api_key=CO_API_KEY)
         additional_prompt = f"""Genre:{genre_options}\nLyrics:"""
-        prompt = initial_prompt + additional_prompt
-        gens = generate(co, prompt)
+        if model_type == "generate":
+            prompt = initial_prompt + additional_prompt
+            gens = generate(co, prompt)
+        else:
+            prompt = f"Give the lyrics for a song."
+            prompt += f" Make sure the genre is {genre_options}."
+            gens = command(co, prompt)
         lyrics = gens[0].text
         st.markdown(f"## Lyrics for a song with genre {genre_options}")
-        st.write(lyrics)
+        st.markdown(lyrics)
 
