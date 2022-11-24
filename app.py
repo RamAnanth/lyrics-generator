@@ -24,7 +24,7 @@ def command(co, prompt, model='command-xlarge-20221108', *args, **kwargs):
     model=model, 
     max_tokens=100, 
     return_likelihoods='GENERATION', 
-    temperature=0.98
+    temperature=0.98,
     *args, **kwargs)
     return sorted(gens, key=lambda g: -g.likelihood)    
 
