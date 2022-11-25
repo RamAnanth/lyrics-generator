@@ -12,7 +12,7 @@ def generate(co, prompt):
     model='xlarge',  
     prompt = prompt,  
     max_tokens=100,  
-    temperature=1,  
+    temperature=0.98,  
     stop_sequences=["--"])
 
     gens = response.generations
@@ -24,7 +24,7 @@ def command(co, prompt, model='command-xlarge-20221108', *args, **kwargs):
     model=model, 
     max_tokens=100, 
     return_likelihoods='GENERATION', 
-    temperature=1,
+    temperature=0.98,
     *args, **kwargs)
     return sorted(gens, key=lambda g: -g.likelihood)    
 
@@ -62,7 +62,7 @@ st.set_page_config(layout="centered", page_icon="🎵", page_title="Lyrics Gener
 
 st.header("Lyrics Generation")
 
-model_type = "command"
+model_type = "generate"
 
 with st.form("form"):
     genre_options = st.selectbox(
